@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master AL ICT</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Unique Favicon - Using a Font Awesome icon as SVG data URI for simplicity -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
+    <style>
+        :root {
+            /* Light Mode Theme: Orange, Blue, White */
+            --primary-orange: #FF8C00; /* Dark Orange */
+            --primary-blue: #4682B4; /* Steel Blue */
+            --white: #ffffff;
+            --light-gray: #f8f8f8; /* Lighter background */
+            --dark-gray: #34495e; /* For secondary text/borders */
+            --text-color: #333;
+            --link-color: var(--primary-blue);
+            --button-bg: var(--primary-blue);
+            --button-hover-bg: #5a91c8; /* Slightly lighter blue */
+            --border-color: #e0e0e0;
+            --success-color: #27ae60;
+            --error-color: #e74c3c;
+            --bg-color: var(--light-gray);
+            --card-bg: var(--white);
+            --header-bg: var(--primary-orange); /* Orange header */
+            --nav-link-color: var(--white);
+            --logo-icon-color: var(--primary-blue); /* Blue icon in orange header */
+        }
+
+        body.dark-mode {
+            /* Dark Mode Theme */
+            --primary-orange: #cc6f00; /* Darker Orange */
+            --primary-blue: #2f547a; /* Darker Steel Blue */
+            --white: #282828; /* Dark card background */
+            --light-gray: #1c1c1c; /* Darker background */
+            --dark-gray: #e0e0e0; /* Lighter text/borders in dark mode */
+            --text-color: #e0e0e0;
+            --link-color: #87cefa; /* Light Sky Blue for links */
+            --button-bg: var(--primary-blue);
+            --button-hover-bg: #4071a8;
+            --border-color: #444;
+            --success-color: #69f0ae;
+            --error-color: #ff8a80;
+            --bg-color: #1a1a1a;
+            --card-bg: #282828;
+            --header-bg: var(--primary-orange);
+            --nav-link-color: var(--e0e0e0);
+            --logo-icon-color: var(--primary-blue);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: var(--header-bg);
+            color: var(--nav-link-color);
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: sticky;            top: 0;
+            z-index: 1000;
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: bold;
+            color: var(--nav-link-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        .logo i {
+            margin-right: 10px;
+            color: var(--logo-icon-color); /* Blue icon in orange header */
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 25px;        }
+
+        nav ul li a {
+            color: var(--nav-link-color);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a i {
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-blue);
+        }
+        body.dark-mode nav ul li a:hover {
+            color: var(--link-color); /* Use light blue in dark mode */
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--nav-link-color);
+            font-size: 1.2em;
+            cursor: pointer;
+            margin-left: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            color: var(--primary-blue);
+        }
+        body.dark-mode .theme-toggle:hover {
+            color: var(--link-color);
+        }
+
+        /* General Section Styling */
+        .page-section {
+            display: none; /* Hidden by default */
+            padding: 40px 0;
+            min-height: calc(100vh - 80px); /* Adjust based on header/footer height */
+        }
+
+        .page-section.active {
+            display: block;
+        }
+        h1, h2, h3 {
+            color: var(--primary-orange); /* Orange headings */
+            margin-bottom: 20px;
+        }
+
+        body.dark-mode h1, body.dark-mode h2, body.dark-mode h3 {
+            color: var(--primary-orange); /* Keep orange in dark mode */
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            position: relative; /* For icon positioning */
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;        }
+        .form-group label i {
+            margin-right: 8px;
+            color: var(--primary-blue); /* Icon color for labels */
+        }
+        body.dark-mode .form-group label i {
+            color: var(--link-color);
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="password"],
+        .form-group input[type="search"],
+        .form-group input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--card-bg);
+            color: var(--text-color);            transition: border-color 0.3s;
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group input[type="email"]:focus,
+        .form-group input[type="password"]:focus,
+        .form-group input[type="search"]:focus,
+        .form-group input[type="file"]:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+        }
+        body.dark-mode .form-group input:focus {
+            border-color: var(--link-color);
+        }
+
+        .btn {
+            display: inline-flex; /* Use flex for icon alignment */
+            align-items: center;
+            justify-content: center;
+            background-color: var(--button-bg);
+            color: var(--white);
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .btn i {
+            margin-right: 8px;
+        }
+        .btn:first-child i { /* No margin-right for the first child if only one icon */
+            margin-right: 0;
+        }
+
+
+        .btn:hover {
+            background-color: var(--button-hover-bg);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--primary-orange); /* Orange secondary button */
+            margin-left: 15px;
+        }
+
+        .btn-secondary:hover {
+            background-color: #e67e22; /* Slightly darker orange */
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;            font-weight: 500;
+        }
+
+        .alert.success {
+            background-color: rgba(39, 174, 96, 0.1);
+            color: var(--success-color);
+            border: 1px solid var(--success-color);
+        }
+
+        .alert.error {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: var(--error-color);
+            border: 1px solid var(--error-color);
+        }
+
+        .alert i {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 10px;            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            margin-bottom: 25px;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        /* Landing Page */
+        #landing-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary-orange), var(--primary-blue)); /* Orange to Blue gradient */
+            color: var(--white);
+        }
+
+        #landing-page h1 {            font-size: 3.5em;
+            margin-bottom: 20px;
+            color: var(--white);
+        }
+
+        #landing-page p {
+            font-size: 1.3em;
+            margin-bottom: 40px;
+        }
+
+        #landing-page .btn {
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border: 2px solid var(--white);
+            background-color: transparent;
+        }
+        #landing-page .btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: var(--white);
+        }
+        /* Home Page */
+        #home-page .hero-section {
+            text-align: center;
+            padding: 50px 0;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        #home-page .hero-section img {
+            max-width: 400px; /* Adjusted for better appearance */
+            height: auto;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Added subtle shadow */
+        }
+
+        #home-page .mobile-app-promo {
+            background: linear-gradient(45deg, var(--primary-blue), var(--primary-orange)); /* Blue to Orange gradient */
+            color: var(--white);
+            padding: 50px;
+            text-align: center;
+            border-radius: 10px;
+            margin-top: 40px;
+        }
+
+        #home-page .mobile-app-promo h2 {
+            color: var(--white);
+            margin-bottom: 15px;
+        }
+
+        #home-page .mobile-app-promo .btn {
+            background-color: var(--white);
+            color: var(--primary-blue); /* Blue text on white button */
+            padding: 15px 30px;
+            font-size: 1.1em;
+        }
+        #home-page .mobile-app-promo .btn:hover {
+            background-color: var(--light-gray);
+            color: var(--primary-orange); /* Orange text on hover */
+        }
+
+        /* Past Papers */
+        .past-paper-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .past-paper-item:last-child {
+            border-bottom: none;
+        }
+        .past-paper-item .actions button {
+            margin-left: 10px;
+            padding: 8px 15px;
+            font-size: 0.9em;
+            border-radius: 5px;
+        }
+        .past-paper-item .status {
+            font-style: italic;
+            color: var(--dark-gray);
+        }
+        body.dark-mode .past-paper-item .status {
+            color: var(--light-gray);
+        }
+
+        /* Classes */
+        .class-card {
+            text-align: center;
+        }
+        .class-card h3 {
+            margin-bottom: 10px;
+            color: var(--primary-blue); /* Blue for class titles */
+        }
+        body.dark-mode .class-card h3 {
+            color: var(--link-color);
+        }
+        .class-card p {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        /* Payments */
+        .payment-option-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .payment-option-card {
+            text-align: center;
+            padding: 30px;
+            border: 2px dashed var(--primary-blue); /* Blue dashed border */
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .payment-option-card:hover {
+            background-color: rgba(var(--primary-blue), 0.05);
+            border-color: var(--primary-orange);
+        }
+        .payment-option-card i {
+            font-size: 3em;
+            color: var(--primary-blue); /* Blue icons */
+            margin-bottom: 15px;
+        }
+        body.dark-mode .payment-option-card i {
+            color: var(--link-color);
+        }
+        .payment-receipt-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .payment-receipt-table th, .payment-receipt-table td {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            text-align: left;
+        }
+        .payment-receipt-table th {
+            background-color: var(--primary-orange); /* Orange table header */
+            color: var(--white);
+            font-weight: 600;
+        }
+        body.dark-mode .payment-receipt-table th {
+            background-color: var(--primary-orange);
+        }
+        .payment-receipt-table tbody tr:nth-child(even) {
+            background-color: var(--light-gray);
+        }
+        body.dark-mode .payment-receipt-table tbody tr:nth-child(even) {
+            background-color: #3a4b5d;
+        }
+
+        /* Chatbot */
+        #chatbot-container {
+            position: fixed;
+            bottom: 20px;            right: 20px;
+            width: 350px;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            overflow: hidden;
+            display: none; /* Hidden by default, shown by JS toggle */
+        }
+        #chatbot-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-blue); /* Blue chatbot toggle */
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.8em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, transform 0.2s;
+            z-index: 1002;
+        }
+        #chatbot-toggle:hover {
+            background-color: var(--button-hover-bg);
+            transform: scale(1.05);
+        }        #chatbot-header {
+            background-color: var(--primary-orange); /* Orange chatbot header */
+            color: var(--white);
+            padding: 15px;
+            font-size: 1.1em;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #chatbot-header button {            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+        #chatbot-body {            height: 300px;
+            padding: 15px;
+            overflow-y: auto;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .chat-message {
+            margin-bottom: 10px;
+            display: flex;
+        }
+        .chat-message.user {
+            justify-content: flex-end;
+        }
+        .chat-message.bot {
+            justify-content: flex-start;
+        }
+        .chat-message p {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 15px;
+            line-height: 1.4;
+        }
+        .chat-message.user p {
+            background-color: var(--primary-blue); /* Blue user messages */
+            color: var(--white);
+            border-bottom-right-radius: 2px;
+        }
+        .chat-message.bot p {
+            background-color: var(--light-gray);
+            color: var(--text-color);
+            border-bottom-left-radius: 2px;
+        }
+        body.dark-mode .chat-message.bot p {
+            background-color: #4a5b6d;
+            color: var(--text-color);
+        }
+        #chatbot-footer {
+            display: flex;
+            padding: 15px;
+        }
+        #chatbot-footer input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            margin-right: 10px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+        #chatbot-footer button {
+            background-color: var(--primary-blue); /* Blue send button */
+            color: var(--white);
+            border: none;
+            border-radius: 20px;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #chatbot-footer button:hover {
+            background-color: var(--button-hover-bg);
+        }
+
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header .container {
+                flex-direction: column;                text-align: center;
+            }
+            nav ul {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            nav ul li {
+                margin: 5px 10px;
+            }
+            .theme-toggle {
+                margin-top: 10px;
+                margin-left: 0;
+            }
+            #landing-page h1 {
+                font-size: 2.5em;
+            }
+            #landing-page p {
+                font-size: 1em;
+            }
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+            .payment-option-grid {
+                grid-template-columns: 1fr;
+            }
+            #chatbot-container {
+                width: 90%;
+                right: 5%;
+                bottom: 80px;
+            }
+            #chatbot-toggle {
+                right: 15px;
+                bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Landing Page -->
+    <div id="landing-page" class="page-section active">
+        <div class="container">
+            <h1><i class="fas fa-graduation-cap"></i> Welcome to Master AL ICT</h1>
+            <p>Your ultimate platform for A-Level ICT success.</p>
+            <div>                <button class="btn" onclick="showPage('register-page')"><i class="fas fa-user-plus"></i> Register</button>
+                <button class="btn btn-secondary" onclick="showPage('login-page')"><i class="fas fa-sign-in-alt"></i> Login</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Page -->
+    <div id="register-page" class="page-section">
+        <div class="container">
+            <div class="card">
+                <h2><i class="fas fa-user-plus"></i> Register for Master AL ICT</h2>
+                <div id="register-message" class="alert success" style="display: none;">
+                    <i class="fas fa-check-circle"></i>
+                    <span id="register-success-text"></span>
+                </div>
+                <form id="register-form">
+                    <div class="form-group">
+                        <label for="reg-first-name"><i class="fas fa-user"></i> First Name</label>
+                        <input type="text" id="reg-first-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-last-name"><i class="fas fa-user"></i> Last Name</label>
+                        <input type="text" id="reg-last-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-email"><i class="fas fa-envelope"></i> Email Address</label>
+                        <input type="email" id="reg-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-nic"><i class="fas fa-id-card"></i> NIC / ID Number</label>
+                        <input type="text" id="reg-nic" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-address"><i class="fas fa-map-marker-alt"></i> Address</label>
+                        <input type="text" id="reg-address" required>
+                    </div>                    <div class="form-group">
+                        <label for="reg-username"><i class="fas fa-user"></i> Username</label>
+                        <input type="text" id="reg-username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-password"><i class="fas fa-lock"></i> Password (min 8 characters)</label>
+                        <input type="password" id="reg-password" minlength="8" required>
+                    </div>
+                    <button type="submit" class="btn"><i class="fas fa-clipboard-check"></i> Register</button>
+                    <button type="button" class="btn btn-secondary" onclick="showPage('login-page')"><i class="fas fa-undo"></i> Back to Login</button>
+                </form>
+            </div>
+        </div>    </div>
+
+    <!-- Login Page -->
+    <div id="login-page" class="page-section">
+        <div class="container">
+            <div class="card">
+                <h2><i class="fas fa-sign-in-alt"></i> Login to Master AL ICT</h2>
+                <div id="login-message" class="alert error" style="display: none;">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span id="login-error-text"></span>
+                </div>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-username"><i class="fas fa-user"></i> Username</label>
+                        <input type="text" id="login-username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password"><i class="fas fa-lock"></i> Password</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" class="btn"><i class="fas fa-sign-in-alt"></i> Login</button>
+                    <button type="button" class="btn btn-secondary" onclick="showPage('register-page')"><i class="fas fa-user-plus"></i> Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application Container (hidden until login) -->
+    <div id="main-app" style="display: none;">
+        <header>
+            <div class="container">
+                <a href="#" class="logo" onclick="showPage('home-page'); return false;"><i class="fas fa-book"></i> Master AL ICT</a>
+                <nav>
+                    <ul>
+                        <li><a href="#" onclick="showPage('home-page'); return false;"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="#" onclick="showPage('past-papers-page'); return false;"><i class="fas fa-file-alt"></i> Past Papers</a></li>
+                        <li><a href="#" onclick="showPage('classes-page'); return false;"><i class="fas fa-chalkboard-teacher"></i> Classes</a></li>
+                        <li><a href="#" onclick="showPage('purchased-lessons-page'); return false;"><i class="fas fa-book-open"></i> Purchased Lessons</a></li>
+                        <li><a href="#" onclick="showPage('payments-page'); return false;"><i class="fas fa-credit-card"></i> Payments</a></li>
+                        <li><a href="#" onclick="showPage('support-page'); return false;"><i class="fas fa-headset"></i> Support</a></li>
+                        <li><a href="#" onclick="showPage('account-page'); return false;"><i class="fas fa-user-circle"></i> Account</a></li>
+                    </ul>
+                </nav>
+                <button class="theme-toggle" id="theme-toggle-btn"><i class="fas fa-moon"></i></button>
+            </div>
+        </header>
+
+        <main>
+            <!-- Home Page -->
+            <div id="home-page" class="page-section">
+                <div class="container">
+                    <div class="hero-section">
+                        <h1 id="home-greeting"><i class="fas fa-hand-sparkles"></i> Hello, Student!</h1>
+                        <p><i class="fas fa-id-badge"></i> Student ID: <span id="home-student-id">N/A</span></p>
+                        <p>Welcome to your learning dashboard. Let's master AL ICT together!</p>
+                        <!-- Updated image for homepage -->
+                        <img src="C:\Users\Hp\Downloads\eLearning Advancements To Boost Your Learning Experience.jpg" alt="students studying" style="width: 100%; max-width:1200px; height:auto; display:block;margin:0 auto;">
+                    </div>
+
+                    <div class="mobile-app-promo">
+                        <h2><i class="fas fa-mobile-alt"></i> Download the Master AL ICT mobile app to access past papers easily.</h2>
+                        <a href="https://play.google.com/store" target="_blank" class="btn">
+                            <i class="fab fa-google-play"></i> Google Play Store
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Past Papers Page -->
+            <div id="past-papers-page" class="page-section">
+                <div class="container">
+                    <h2><i class="fas fa-file-alt"></i> A-Level ICT Model Papers</h2>
+                    <div class="form-group">
+                        <label for="paper-search"><i class="fas fa-search"></i> Search Papers</label>
+                        <input type="search" id="paper-search" placeholder="Search for papers...">
+                    </div>
+                    <div class="card">
+                        <div id="past-papers-list">
+                            <!-- Paper items will be dynamically loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Classes Page -->
+            <div id="classes-page" class="page-section">
+                <div class="container">
+                    <h2><i class="fas fa-chalkboard-teacher"></i> Available Classes</h2>
+                    <div class="card-grid">
+                        <div class="card class-card">
+                            <h3><i class="fas fa-book-reader"></i> 2026 ICT Theory</h3>
+                            <p>Price: Rs. 3500</p>
+                            <button class="btn" onclick="initiatePayment('2026 ICT Theory', 3500)"><i class="fas fa-money-bill-wave"></i> Pay Now</button>
+                        </div>
+                        <div class="card class-card">
+                            <h3><i class="fas fa-book-reader"></i> 2027 ICT Theory</h3>
+                            <p>Price: Rs. 3500</p>
+                            <button class="btn" onclick="initiatePayment('2027 ICT Theory', 3500)"><i class="fas fa-money-bill-wave"></i> Pay Now</button>
+                        </div>
+                        <div class="card class-card">
+                            <h3><i class="fas fa-redo-alt"></i> 2026 Revision</h3>
+                            <p>Price: Rs. 3500</p>
+                            <button class="btn" onclick="initiatePayment('2026 Revision', 3500)"><i class="fas fa-money-bill-wave"></i> Pay Now</button>
+                        </div>
+                        <div class="card class-card">
+                            <h3><i class="fas fa-scroll"></i> 2026 Paper Class</h3>
+                            <p>Price: Rs. 3500</p>
+                            <button class="btn" onclick="initiatePayment('2026 Paper Class', 3500)"><i class="fas fa-money-bill-wave"></i> Pay Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Purchased Lessons Page (Placeholder) -->
+            <div id="purchased-lessons-page" class="page-section">
+                <div class="container">
+                    <h2><i class="fas fa-book-open"></i> Purchased Lessons</h2>
+                    <div class="card">
+                        <p><i class="fas fa-info-circle"></i> You have not purchased any lessons yet. Visit the <a href="#" onclick="showPage('classes-page'); return false;">Classes page</a> to enroll!</p>
+                        <!-- Purchased lessons would be listed here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payments Page -->
+            <div id="payments-page" class="page-section">
+                <div class="container">
+                    <h2><i class="fas fa-credit-card"></i> My Payments</h2>
+                    <div class="card">
+                        <div id="payment-history">
+                            <p id="no-payments-msg"><i class="fas fa-money-bill-wave-alt"></i> No payments recorded yet.</p>
+                            <table class="payment-receipt-table" style="display: none;">
+                                <thead>
+                                    <tr>
+                                        <th><i class="fas fa-receipt"></i> Payment ID</th>
+                                        <th><i class="fas fa-chalkboard-teacher"></i> Class Name</th>
+                                        <th><i class="fas fa-calendar-alt"></i> Date</th>
+                                        <th><i class="fas fa-money-check-alt"></i> Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="payments-table-body">
+                                    <!-- Payment records will be inserted here -->
+                                </tbody>                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Support Page -->
+            <div id="support-page" class="page-section">
+                <div class="container">
+                    <h2><i class="fas fa-headset"></i> Support Center</h2>
+                    <div class="card">
+                        <p><i class="fas fa-question-circle"></i> If you have any questions or need assistance, feel free to use our AI chatbot or contact our support team directly.</p>
+                        <p><strong><i class="fas fa-phone"></i> Phone:</strong> +94 77 456 7890</p>
+                        <p><strong><i class="fas fa-at"></i> Email:</strong> <a href="mailto:support@masteralict.com">support@masteralict.com</a></p>                        <button class="btn" onclick="toggleChatbot()"><i class="fas fa-robot"></i> Open Chatbot</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Account Page -->
+            <div id="account-page" class="page-section">
+                <div class="container">
+                    <h2><i class="fas fa-user-circle"></i> Account Settings</h2>
+                    <div class="card">
+                        <h3><i class="fas fa-info"></i> Profile Information</h3>
+                        <p><strong><i class="fas fa-signature"></i> Name:</strong> <span id="account-name"></span></p>
+                        <p><strong><i class="fas fa-envelope"></i> Email:</strong> <span id="account-email"></span></p>
+                        <p><strong><i class="fas fa-id-badge"></i> Student ID:</strong> <span id="account-student-id"></span></p>
+                        <button class="btn"><i class="fas fa-edit"></i> Edit Account</button>
+                    </div>
+
+                    <div class="card">
+                        <h3><i class="fas fa-key"></i> Change Password</h3>
+                        <form id="change-password-form">
+                            <div class="form-group">
+                                <label for="current-email"><i class="fas fa-envelope"></i> Your Email Address</label>
+                                <input type="email" id="current-email" required>
+                            </div>
+                            <button type="button" class="btn" onclick="sendVerificationCode()"><i class="fas fa-paper-plane"></i> Send Verification Code</button>
+                            <div id="verification-section" style="display: none; margin-top: 15px;">
+                                <div class="form-group">
+                                    <label for="verification-code"><i class="fas fa-shield-alt"></i> Verification Code</label>
+                                    <input type="text" id="verification-code" placeholder="Enter code" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="new-password"><i class="fas fa-lock-open"></i> New Password (min 8 characters)</label>
+                                    <input type="password" id="new-password" minlength="8" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirm-new-password"><i class="fas fa-lock-open"></i> Confirm New Password</label>
+                                    <input type="password" id="confirm-new-password" minlength="8" required>
+                                </div>
+                                <button type="submit" class="btn"><i class="fas fa-sync-alt"></i> Reset Password</button>
+                                <div id="password-reset-message" class="alert success" style="display: none; margin-top: 15px;"></div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="card">
+                        <button class="btn btn-secondary" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- AI Support Chatbot -->
+    <div id="chatbot-toggle"><i class="fas fa-comment-dots"></i></div>
+    <div id="chatbot-container">
+        <div id="chatbot-header">
+            <span><i class="fas fa-robot"></i> Master AL ICT Chatbot</span>
+            <button onclick="toggleChatbot()"><i class="fas fa-times"></i></button>
+        </div>
+        <div id="chatbot-body">
+            <div class="chat-message bot"><p>Hi there! How can I assist you today?</p></div>
+        </div>
+        <div id="chatbot-footer">
+            <input type="text" id="chatbot-input" placeholder="Type your message...">
+            <button id="chatbot-send-btn"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+
+    <script>
+        // --- Global State & Utility Functions ---
+        let currentUser = null;
+        let registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || {};
+        let studentPayments = JSON.parse(localStorage.getItem('studentPayments')) || {};
+        let currentVerificationCode = null; // For password reset simulation
+
+        function generateUniqueId(prefix) {
+            return prefix + Math.random().toString(36).substr(2, 9).toUpperCase();
+        }
+
+        function saveUsers() {
+            localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+        }
+
+        function savePayments() {
+            localStorage.setItem('studentPayments', JSON.stringify(studentPayments));
+        }
+
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page-section');
+            pages.forEach(page => page.classList.remove('active'));
+
+            // Chatbot toggle is now always visible
+            document.getElementById('chatbot-toggle').style.display = 'flex';
+
+            if (pageId === 'landing-page' || pageId === 'register-page' || pageId === 'login-page') {
+                document.getElementById('main-app').style.display = 'none';
+                // Chatbot container remains hidden until explicitly toggled
+            } else {
+                if (!currentUser) {
+                    alert('Please login or register to access the platform.');
+                    showPage('landing-page');
+                    return;
+                }
+                document.getElementById('main-app').style.display = 'block';
+                updateHomePage();
+                updatePaymentsPage();
+                updateAccountPage();
+                updatePastPapersPage(); // Ensure past papers are loaded
+            }
+
+            const activePage = document.getElementById(pageId);
+            if (activePage) {
+                activePage.classList.add('active');
+            }
+        }
+
+        // --- Theme Toggle (Day/Night Mode) ---
+        const themeToggleBtn = document.getElementById('theme-toggle-btn');
+        const currentTheme = localStorage.getItem('theme');
+
+        if (currentTheme) {
+            document.body.classList.add(currentTheme);
+            if (currentTheme === 'dark-mode') {
+                themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        } else {
+             themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+        }
+
+        themeToggleBtn.addEventListener('click', () => {            document.body.classList.toggle('dark-mode');
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark-mode');
+                themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                localStorage.setItem('theme', 'light-mode');
+                themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+
+        // --- Registration Logic ---
+        document.getElementById('register-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const firstName = document.getElementById('reg-first-name').value;
+            const lastName = document.getElementById('reg-last-name').value;
+            const email = document.getElementById('reg-email').value;
+            const nic = document.getElementById('reg-nic').value;
+            const address = document.getElementById('reg-address').value;
+            const username = document.getElementById('reg-username').value;
+            const password = document.getElementById('reg-password').value;
+
+            if (password.length < 8) {
+                alert('Password must be at least 8 characters long.');
+                return;
+            }
+
+            if (registeredUsers[username]) {
+                alert('Username already exists. Please choose another.');
+                return;
+            }
+
+            const studentId = generateUniqueId('SID');
+            registeredUsers[username] = {
+                firstName,
+                lastName,
+                email,
+                nic,
+                address,
+                password, // In a real app, hash this!
+                studentId,
+                payments: []
+            };
+            saveUsers();
+
+            const registerMessage = document.getElementById('register-message');
+            document.getElementById('register-success-text').textContent = `You have successfully registered. Your Student ID is ${studentId}.`;
+            registerMessage.style.display = 'flex';
+            this.reset(); // Clear form
+
+            setTimeout(() => {
+                registerMessage.style.display = 'none';
+                showPage('login-page'); // Redirect to login page
+            }, 3000);
+        });
+
+        // --- Login Logic ---
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            const loginMessage = document.getElementById('login-message');
+
+            if (registeredUsers[username] && registeredUsers[username].password === password) {
+                currentUser = registeredUsers[username];
+                localStorage.setItem('currentUser', JSON.stringify(currentUser)); // Store current user session
+                loginMessage.style.display = 'none';
+                showPage('home-page'); // Redirect to home dashboard
+            } else {
+                document.getElementById('login-error-text').textContent = 'Invalid username or password.';
+                loginMessage.style.display = 'flex';
+            }
+        });
+
+        // --- Auto-Login Check on Load ---
+        window.addEventListener('load', () => {
+            const storedUser = localStorage.getItem('currentUser');
+            if (storedUser) {
+                currentUser = JSON.parse(storedUser);
+                showPage('home-page');
+            } else {
+                showPage('landing-page');
+            }
+        });
+
+        // --- Logout Logic ---
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            alert('You have been logged out.');
+            showPage('landing-page');
+        }
+        // --- Home Page Update ---
+        function updateHomePage() {
+            if (currentUser) {
+                document.getElementById('home-greeting').textContent = `Hello, ${currentUser.firstName} ${currentUser.lastName}`;
+                document.getElementById('home-student-id').textContent = currentUser.studentId;
+            }
+        }
+
+        // --- Past Papers Page Logic ---
+        const pastPapersData = [
+            { id: 1, title: "A-Level ICT Model Paper 1 (2016)", year: 2016, downloadable: true, file: "model_paper_1.pdf" },
+            { id: 2, title: "A-Level ICT Model Paper 2 (2017)", year: 2017, downloadable: true, file: "model_paper_2.pdf" },
+            { id: 3, title: "A-Level ICT Model Paper 3 (2018)", year: 2018, downloadable: true, file: "model_paper_3.pdf" },
+            { id: 4, title: "A-Level ICT Model Paper 4 (2019)", year: 2019, downloadable: false },
+            { id: 5, title: "A-Level ICT Model Paper 5 (2020)", year: 2020, downloadable: false },
+            { id: 6, title: "A-Level ICT Model Paper 6 (2021)", year: 2021, downloadable: false },
+            { id: 7, title: "A-Level ICT Model Paper 7 (2022)", year: 2022, downloadable: false },
+            { id: 8, title: "A-Level ICT Model Paper 8 (2023)", year: 2023, downloadable: false },
+            { id: 9, title: "A-Level ICT Model Paper 9 (2024)", year: 2024, downloadable: false },
+            { id: 10, title: "A-Level ICT Model Paper 10 (2025)", year: 2025, downloadable: false },
+            { id: 11, title: "A-Level ICT Model Paper 11 (2026)", year: 2026, downloadable: false }
+        ];
+
+        function renderPastPapers(papers) {
+            const listContainer = document.getElementById('past-papers-list');
+            listContainer.innerHTML = '';
+            if (papers.length === 0) {
+                listContainer.innerHTML = '<p><i class="fas fa-exclamation-circle"></i> No papers found matching your search.</p>';
+                return;
+            }
+
+            papers.forEach(paper => {
+                const paperItem = document.createElement('div');
+                paperItem.classList.add('past-paper-item');
+                paperItem.innerHTML = `
+                    <span><i class="fas fa-file-pdf"></i> ${paper.title}</span>
+                    <div class="actions">
+                        ${paper.downloadable ? `
+                            <button class="btn" onclick="viewPaper('${paper.file}')"><i class="fas fa-eye"></i> View</button>
+                            <button class="btn btn-secondary" onclick="downloadPaper('${paper.file}')"><i class="fas fa-download"></i> Download</button>
+                        ` : `<span class="status"><i class="fas fa-hourglass-half"></i> More papers coming soon!</span>`}
+                    </div>
+                `;
+                listContainer.appendChild(paperItem);
+            });
+        }        function updatePastPapersPage() {
+            renderPastPapers(pastPapersData); // Initial render
+        }
+
+        document.getElementById('paper-search').addEventListener('keyup', function() {
+            const searchTerm = this.value.toLowerCase();
+            const filteredPapers = pastPapersData.filter(paper =>
+                paper.title.toLowerCase().includes(searchTerm) ||
+                String(paper.year).includes(searchTerm)
+            );
+            renderPastPapers(filteredPapers);
+        });
+
+        function viewPaper(fileName) {
+            // In a real application, you'd open a PDF viewer or embed it.
+            // For this simulation, we'll just open a placeholder.
+            alert(`Simulating view for ${fileName}. In a real app, this would open in a browser PDF viewer.`);
+            window.open(`https://docs.google.com/viewer?url=https://example.com/${fileName}`, '_blank'); // Example using Google Docs Viewer
+        }
+
+        function downloadPaper(fileName) {
+            // In a real application, you'd trigger a download.
+            alert(`Simulating download for ${fileName}. This would trigger a file download.`);
+            const link = document.createElement('a');
+            link.href = `https://example.com/${fileName}`; // Placeholder URL
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // --- Payment System Logic ---
+        let currentPaymentDetails = null;
+
+        function initiatePayment(className, amount) {
+            if (!currentUser) {
+                alert('Please login to make a payment.');
+                showPage('login-page');
+                return;
+            }
+            currentPaymentDetails = { className, amount, date: new Date().toLocaleDateString() };
+
+            const paymentPrompt = `You are about to pay Rs. ${amount} for "${className}".\n\nChoose a payment option:\n1. Upload Payment Receipt (Bank Transfer etc.)\n2. Online Payment (Simulated)`;
+            const choice = prompt(paymentPrompt);
+
+            if (choice === '1') {
+                alert('Please proceed with your bank transfer. You will be prompted to upload the receipt.');
+                simulateReceiptUpload();
+            } else if (choice === '2') {
+                alert('Redirecting to simulated online payment gateway...');
+                simulateOnlinePayment();
+            } else {
+                alert('Payment cancelled.');
+                currentPaymentDetails = null;
+            }
+        }
+
+        function simulateReceiptUpload() {
+            setTimeout(() => {
+                const receiptFile = prompt('Please paste a link to your payment receipt (e.g., image URL) or type "done" to simulate upload:');
+                if (receiptFile) {
+                    processPaymentConfirmation();
+                } else {                    alert('Receipt upload cancelled.');
+                    currentPaymentDetails = null;
+                }
+            }, 1000);
+        }
+
+        function simulateOnlinePayment() {
+            setTimeout(() => {
+                alert('Online payment successful (simulated)!');
+                processPaymentConfirmation();
+            }, 2000);
+        }
+
+        function processPaymentConfirmation() {
+            if (!currentPaymentDetails) return;
+
+            const verificationCode = Math.floor(100000 + Math.random() * 900000).toString(); // 6-digit code
+            alert(`A verification code has been sent to your registered email (simulated): ${verificationCode}`);
+
+            const enteredCode = prompt('Please enter the verification code:');
+            if (enteredCode === verificationCode) {
+                const paymentId = generateUniqueId('PAY');
+                alert("You have successfully made the payment!");
+
+                const paymentRecord = {
+                    paymentId: paymentId,
+                    className: currentPaymentDetails.className,
+                    date: currentPaymentDetails.date,
+                    amount: currentPaymentDetails.amount
+                };
+
+                // Add payment to current user's record
+                currentUser.payments.push(paymentRecord);
+                registeredUsers[currentUser.username] = currentUser; // Update in global users list
+                saveUsers();
+
+                // Also update the global payments tracking if needed, though user.payments is sufficient
+                if (!studentPayments[currentUser.studentId]) {
+                    studentPayments[currentUser.studentId] = [];
+                }
+                studentPayments[currentUser.studentId].push(paymentRecord);
+                savePayments();
+
+                generatePaymentReceipt(paymentRecord);
+                showPage('payments-page'); // Redirect to payments history
+            } else {
+                alert('Incorrect verification code. Payment failed.');
+            }
+            currentPaymentDetails = null; // Clear payment details
+        }
+
+        function generatePaymentReceipt(payment) {
+            const receipt = `
+                --- Payment Receipt ---
+                Master AL ICT
+                Date: ${payment.date}
+
+                Payment ID: ${payment.paymentId}
+                Student ID: ${currentUser.studentId}
+                Student Name: ${currentUser.firstName} ${currentUser.lastName}
+                Email: ${currentUser.email}
+
+                Class Purchased: Rs. ${payment.amount} for "${payment.className}"
+
+                Thank you for your payment!
+                ------------------------
+            `;
+            console.log("Generated Receipt:\n", receipt);
+            // In a real app, you might display this in a modal or generate a PDF.
+            alert("Payment Receipt generated (check console for details).");
+        }
+
+        // --- Payments Page Update ---
+        function updatePaymentsPage() {
+            const paymentsTableBody = document.getElementById('payments-table-body');
+            const noPaymentsMsg = document.getElementById('no-payments-msg');
+            const paymentsTable = document.querySelector('.payment-receipt-table');
+
+            paymentsTableBody.innerHTML = ''; // Clear previous entries
+
+            if (currentUser && currentUser.payments.length > 0) {
+                noPaymentsMsg.style.display = 'none';
+                paymentsTable.style.display = 'table';
+                currentUser.payments.forEach(payment => {
+                    const row = paymentsTableBody.insertRow();
+                    row.insertCell(0).textContent = payment.paymentId;
+                    row.insertCell(1).textContent = payment.className;
+                    row.insertCell(2).textContent = payment.date;                    row.insertCell(3).textContent = `Rs. ${payment.amount}`;
+                });
+            } else {
+                noPaymentsMsg.style.display = 'block';
+                paymentsTable.style.display = 'none';
+            }
+        }
+
+        // --- Account Page Update ---
+        function updateAccountPage() {
+            if (currentUser) {
+                document.getElementById('account-name').textContent = `${currentUser.firstName} ${currentUser.lastName}`;
+                document.getElementById('account-email').textContent = currentUser.email;
+                document.getElementById('account-student-id').textContent = currentUser.studentId;
+            }
+        }
+        // --- Change Password Logic ---
+        function sendVerificationCode() {
+            const email = document.getElementById('current-email').value;
+            if (email !== currentUser.email) {
+                alert('The email address does not match your registered email.');
+                return;
+            }
+            currentVerificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+            alert(`A verification code has been sent to ${email} (simulated): ${currentVerificationCode}`);
+            document.getElementById('verification-section').style.display = 'block';
+        }
+
+        document.getElementById('change-password-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const enteredCode = document.getElementById('verification-code').value;
+            const newPassword = document.getElementById('new-password').value;
+            const confirmNewPassword = document.getElementById('confirm-new-password').value;
+            const passwordResetMessage = document.getElementById('password-reset-message');
+
+            if (enteredCode !== currentVerificationCode) {
+                passwordResetMessage.className = 'alert error';
+                passwordResetMessage.innerHTML = '<i class="fas fa-exclamation-circle"></i> Incorrect verification code.';
+                passwordResetMessage.style.display = 'flex';
+                return;
+            }
+            if (newPassword.length < 8) {
+                passwordResetMessage.className = 'alert error';
+                passwordResetMessage.innerHTML = '<i class="fas fa-exclamation-circle"></i> New password must be at least 8 characters.';
+                passwordResetMessage.style.display = 'flex';
+                return;
+            }
+            if (newPassword !== confirmNewPassword) {
+                passwordResetMessage.className = 'alert error';
+                passwordResetMessage.innerHTML = '<i class="fas fa-exclamation-circle"></i> New passwords do not match.';
+                passwordResetMessage.style.display = 'flex';
+                return;
+            }
+
+            currentUser.password = newPassword; // Update password
+            registeredUsers[currentUser.username] = currentUser; // Update in global users list
+            saveUsers();            localStorage.setItem('currentUser', JSON.stringify(currentUser)); // Update session
+
+            passwordResetMessage.className = 'alert success';
+            passwordResetMessage.innerHTML = '<i class="fas fa-check-circle"></i> Password successfully reset!';
+            passwordResetMessage.style.display = 'flex';
+
+            this.reset(); // Clear form
+            document.getElementById('verification-section').style.display = 'none';
+            currentVerificationCode = null; // Clear code
+
+            setTimeout(() => {
+                passwordResetMessage.style.display = 'none';
+            }, 3000);
+        });
+
+        // --- AI Support Chatbot Logic ---        const chatbotToggle = document.getElementById('chatbot-toggle');
+        const chatbotContainer = document.getElementById('chatbot-container');
+        const chatbotBody = document.getElementById('chatbot-body');
+        const chatbotInput = document.getElementById('chatbot-input');
+        const chatbotSendBtn = document.getElementById('chatbot-send-btn');
+
+        function toggleChatbot() {
+            chatbotContainer.style.display = chatbotContainer.style.display === 'block' ? 'none' : 'block';
+            if (chatbotContainer.style.display === 'block') {
+                chatbotInput.focus();
+                chatbotBody.scrollTop = chatbotBody.scrollHeight; // Scroll to bottom
+            }
+        }
+
+        chatbotToggle.addEventListener('click', toggleChatbot);
+        chatbotSendBtn.addEventListener('click', sendChatMessage);
+        chatbotInput.addEventListener('keypress', function(e) {            if (e.key === 'Enter') {
+                sendChatMessage();
+            }
+        });
+
+        function addChatMessage(message, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('chat-message', sender);
+            messageDiv.innerHTML = `<p>${message}</p>`;
+            chatbotBody.appendChild(messageDiv);
+            chatbotBody.scrollTop = chatbotBody.scrollHeight;
+        }
+
+        function sendChatMessage() {
+            const userMessage = chatbotInput.value.trim();
+            if (userMessage === '') return;
+
+            addChatMessage(userMessage, 'user');
+            chatbotInput.value = '';
+
+            setTimeout(() => {
+                const botResponse = getChatbotResponse(userMessage);
+                addChatMessage(botResponse, 'bot');
+            }, 500);
+        }
+
+        function getChatbotResponse(message) {
+            const lowerMessage = message.toLowerCase();
+
+            if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
+                return 'Hello! How can I assist you with Master AL ICT today?';
+            } else if (lowerMessage.includes('website') && lowerMessage.includes('about')) {
+                return 'Master AL ICT is an A-Level ICT learning platform offering model papers, online classes, and support to help students excel.';
+            } else if (lowerMessage.includes('past papers') || lowerMessage.includes('papers')) {
+                return 'You can find A-Level ICT Model Papers from 2016 to 2026 on the Past Papers page. Model Papers 1, 2, and 3 are available for viewing and download.';
+            } else if (lowerMessage.includes('classes') || lowerMessage.includes('enroll')) {
+                return 'We offer classes like "2026 ICT Theory", "2027 ICT Theory", "2026 Revision", and "2026 Paper Class". Each costs Rs. 3500. Visit the Classes page to enroll!';
+            } else if (lowerMessage.includes('payment') || lowerMessage.includes('pay')) {
+                return 'Our payment system allows you to either upload a payment receipt or make an online payment. You can view your payment history on the Payments page.';
+            } else if (lowerMessage.includes('account') || lowerMessage.includes('profile')) {
+                return 'On the Account page, you can edit your profile, change your password, and logout. If you want to reset your password, you will need to verify your email.';
+            } else if (lowerMessage.includes('contact') || lowerMessage.includes('support')) {
+                return 'You can reach our support team at Phone: +94 77 456 7890 or Email: support@masteralict.com.';            } else if (lowerMessage.includes('student id') && currentUser) {
+                return `Your student ID is: ${currentUser.studentId}.`;
+            } else {
+                return "I am not sure about that. Please contact our support team.<br>Phone: +94 77 456 7890<br>Email: support@masteralict.com";
+            }
+        }
+    </script>
+</body>
+</html>
